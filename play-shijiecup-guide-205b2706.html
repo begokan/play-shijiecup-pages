@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界杯 · 赛事信息门户 · play-shijiecup.com</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #f2f4f7;
+      color: #1e2a3a;
+      line-height: 1.6;
+      padding: 2rem 1.5rem 4rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .page-wrap {
+      max-width: 1120px;
+      width: 100%;
+    }
+
+    /* 主视觉 Hero 卡片 */
+    .hero-card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 3rem 2.5rem 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03), 0 2px 6px rgba(0, 0, 0, 0.02);
+      border: 1px solid #e6eaef;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s ease;
+    }
+
+    .hero-text {
+      flex: 1 1 55%;
+      min-width: 260px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      color: #0f1825;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text h1 span {
+      background: linear-gradient(145deg, #0b1d31, #1f3b5c);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 650;
+    }
+
+    .hero-text p {
+      font-size: 1.08rem;
+      color: #2e3f55;
+      margin-bottom: 1.8rem;
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #eef2f8;
+      padding: 0.35rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #1d3146;
+      border: 1px solid #d4dce6;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.3px;
+    }
+
+    .hero-visual {
+      flex: 0 0 160px;
+      height: 160px;
+      background: #e9edf4;
+      border-radius: 40% 60% 40% 60% / 50% 40% 60% 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.6rem;
+      font-weight: 300;
+      color: #1f3b5c;
+      border: 1px solid #d5dde8;
+      box-shadow: 0 10px 18px -10px rgba(0, 0, 0, 0.06);
+      margin-left: 1.5rem;
+    }
+
+    .hero-visual::after {
+      content: "⚽︎";
+      font-size: 4.2rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 700px) {
+      .hero-card {
+        padding: 2rem 1.5rem;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-visual {
+        margin-left: 0;
+        margin-top: 1.5rem;
+        width: 100%;
+        height: 120px;
+        border-radius: 32px;
+      }
+      .hero-text h1 {
+        font-size: 1.8rem;
+      }
+    }
+
+    /* 用途卡片 grid */
+    .purpose-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.6rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .purpose-card {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 1.8rem 1.5rem 1.6rem;
+      border: 1px solid #e0e6ee;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      transition: box-shadow 0.25s, transform 0.15s;
+    }
+
+    .purpose-card:hover {
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.05);
+      transform: translateY(-2px);
+    }
+
+    .purpose-card .icon {
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .purpose-card h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0.2rem 0 0.6rem;
+      color: #101e2f;
+    }
+
+    .purpose-card p {
+      font-size: 0.95rem;
+      color: #2d4059;
+      margin-bottom: 0.1rem;
+    }
+
+    /* 人群 + 场景组合卡片 */
+    .audience-scene {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.6rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .audience-box {
+      flex: 1 1 45%;
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid #e3e9f1;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      min-width: 200px;
+    }
+
+    .audience-box h2 {
+      font-size: 1.3rem;
+      font-weight: 550;
+      border-bottom: 2px solid #e9edf4;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: #0e1e30;
+    }
+
+    .audience-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .audience-box li {
+      padding: 0.4rem 0 0.4rem 1.6rem;
+      position: relative;
+      font-size: 0.98rem;
+      color: #1e334b;
+    }
+
+    .audience-box li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #7288a5;
+      font-weight: 300;
+    }
+
+    .scene-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 0.8rem;
+      margin-top: 0.8rem;
+    }
+
+    .scene-tags span {
+      background: #edf2f9;
+      border-radius: 60px;
+      padding: 0.25rem 1rem;
+      font-size: 0.85rem;
+      color: #1d334d;
+      border: 1px solid #d1dbe8;
+    }
+
+    /* 自然链接段落 */
+    .link-section {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2rem 2.2rem;
+      border: 1px solid #e0e7f0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+      margin-bottom: 2.8rem;
+    }
+
+    .link-section p {
+      font-size: 1.02rem;
+      color: #1d3148;
+      margin-bottom: 0.5rem;
+    }
+
+    .link-section a {
+      color: #1b4d7a;
+      text-decoration: none;
+      font-weight: 550;
+      border-bottom: 1px solid #b7cbdf;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .link-section a:hover {
+      border-bottom-color: #1b4d7a;
+      color: #0a2c47;
+    }
+
+    /* FAQ 摘要卡片 */
+    .faq-digest {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 2rem 2rem;
+      border: 1px solid #e3eaf3;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+      margin-bottom: 2rem;
+    }
+
+    .faq-digest h2 {
+      font-size: 1.2rem;
+      font-weight: 550;
+      margin-bottom: 1.2rem;
+      color: #0a1d31;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-item {
+      padding: 0.7rem 0;
+      border-bottom: 1px solid #edf2f8;
+    }
+
+    .faq-item:last-child {
+      border-bottom: 0;
+    }
+
+    .faq-question {
+      font-weight: 510;
+      color: #14273e;
+      margin-bottom: 0.15rem;
+    }
+
+    .faq-answer {
+      font-size: 0.93rem;
+      color: #2f4662;
+      line-height: 1.5;
+    }
+
+    .faq-answer a {
+      color: #1b4d7a;
+      text-decoration: none;
+      border-bottom: 1px solid #b7cbdf;
+    }
+
+    .faq-answer a:hover {
+      border-bottom-color: #1b4d7a;
+    }
+
+    /* 页脚 */
+    .page-footer {
+      text-align: center;
+      padding-top: 1.2rem;
+      border-top: 1px solid #dce3ed;
+      font-size: 0.85rem;
+      color: #4c627b;
+      margin-top: 0.8rem;
+    }
+
+    .page-footer small {
+      display: block;
+      margin-top: 0.25rem;
+      color: #687b92;
+    }
+
+    /* 通用 */
+    a.nohover {
+      border-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+
+    <!-- Hero 主视觉卡片 -->
+    <div class="hero-card">
+      <div class="hero-text">
+        <div class="hero-badge">⚽ 赛事信息 · 快速识别</div>
+        <h1>关于 <span>世界杯</span> 的<br>一站集成信息</h1>
+        <p>如果你正寻找关于世界杯的赛程、历史、队伍背景或竞猜常识，这个页面可以帮你直接定位到准确信息源，节省反复检索的时间。</p>
+      </div>
+      <div class="hero-visual"></div>
+    </div>
+
+    <!-- 用途卡片（信息卡片式） -->
+    <div class="purpose-grid">
+      <div class="purpose-card">
+        <span class="icon">🏆</span>
+        <h3>赛程与结果速览</h3>
+        <p>汇集当届世界杯预选赛及正赛的时间线、分组与比分，适合赛前准备或赛后回顾。</p>
+      </div>
+      <div class="purpose-card">
+        <span class="icon">📋</span>
+        <h3>球队与球员档案</h3>
+        <p>主要参赛队伍的核心阵容、历史战绩以及关键球员数据，帮助理解对战背景。</p>
+      </div>
+      <div class="purpose-card">
+        <span class="icon">🧮</span>
+        <h3>数据与纪录参考</h3>
+        <p>历届冠军、最佳射手、比赛统计等结构化信息，方便查阅、对比或引用。</p>
+      </div>
+      <div class="purpose-card">
+        <span class="icon">🔍</span>
+        <h3>规则与背景解读</h3>
+        <p>简明版比赛规则、晋级机制及判罚常识，快速消除观赛中的规则盲区。</p>
+      </div>
+    </div>
+
+    <!-- 适合人群 + 场景区（人群卡片） -->
+    <div class="audience-scene">
+      <div class="audience-box">
+        <h2>适合哪些人</h2>
+        <ul>
+          <li>刚接触世界杯、希望系统了解赛事架构的新观众</li>
+          <li>需要快速查找比赛日程和数据的赛事爱好者</li>
+          <li>参与世界杯主题讨论、内容分享或轻量竞猜的用户</li>
+          <li>想回顾经典赛事、整理知识点的体育内容创作者</li>
+        </ul>
+      </div>
+      <div class="audience-box">
+        <h2>常见使用场景</h2>
+        <div class="scene-tags">
+          <span>赛前临时补课</span>
+          <span>和朋友讨论阵容</span>
+          <span>查询历史纪录</span>
+          <span>撰写赛事简报</span>
+          <span>对比各届冠军</span>
+          <span>规则快速澄清</span>
+        </div>
+        <p style="margin-top: 1.4rem; font-size: 0.93rem; color: #2a405b;">这些场景通常需要结构清晰、更新及时的参考信息，该网站围绕这类需求组织内容。</p>
+      </div>
+    </div>
+
+    <!-- 自然链接段落（嵌入 a 标签） -->
+    <div class="link-section">
+      <p>
+        若要进一步检索更完整的赛事信息、查看官方数据或当前阶段的详细资料，可以直接访问 <a href="https://play-shijiecup.com">世界杯</a> 页面，那里整合了覆盖历史与当下的内容板块。
+      </p>
+      <p>
+        无论你希望追踪比赛进程还是回顾经典对决，从该站点出发，都能找到对应的信息入口。
+      </p>
+    </div>
+
+    <!-- FAQ 摘要卡片（帮助快速理解网站用途） -->
+    <div class="faq-digest">
+      <h2>❓ 常见疑问 · 摘要</h2>
+
+      <div class="faq-item">
+        <div class="faq-question">这个网站主要提供什么？</div>
+        <div class="faq-answer">围绕世界杯的赛程、队伍、历史纪录和基础规则的信息集合，适合作为快速参考源。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">信息来源可靠吗？</div>
+        <div class="faq-answer">内容基于公开赛事数据与官方信息整理，并持续核对更新。关于具体场次或实时数据，建议同时参考多家来源。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">是否需要注册或付费？</div>
+        <div class="faq-answer">完全免费开放阅读，无需注册。站内不提供下注、博彩或任何金钱交易功能。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">如何获得最新赛程？</div>
+        <div class="faq-answer">可以直接使用 <a href="https://play-shijiecup.com">世界杯</a> 页面的赛程分区，该板块会在重要比赛周期保持更新。</div>
+      </div>
+    </div>
+
+    <!-- 页脚 -->
+    <div class="page-footer">
+      <span>play-shijiecup.com · 信息聚合 · 非官方</span>
+      <small>内容仅供个人参考，不构成任何投注建议。</small>
+    </div>
+
+  </div>
+</body>
+</html>
